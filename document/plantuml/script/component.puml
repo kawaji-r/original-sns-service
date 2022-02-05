@@ -1,0 +1,37 @@
+@startuml component
+' ==========
+' ノード定義
+' ==========
+frame "開発用PC" as devpc {
+    node "orginal-sns-service" as repository1 <<git-repository>> {
+        folder "ドキュメントetc" as doc1
+        folder "ソースコード" as sourcedir1
+    }
+    node "App-Container" as docker2 <<docker>> {
+        folder "ソースコード" as sourcedir2
+        card "Nginx" as nginx1
+    }
+    node "DB-Container" as docker1 <<docker>> {
+        card "PostgreSQL" as psql1
+    }
+    card "ブラウザ" as browser1
+}
+
+' ================
+' リレーション定義
+' ================
+sourcedir1 --> sourcedir2 : マウント
+
+sourcedir2 -> psql1
+nginx1 -left-> sourcedir2
+browser1 -->  nginx1: 閲覧(:80)
+
+' ================
+' スタイル
+' ================
+skinparam node {
+  borderColor<<git-repository>> Green
+  borderColor<<docker>> DeepSkyBlue
+}
+
+@enduml
