@@ -1,0 +1,26 @@
+<!-- reply モーダル -->
+<div class="modal fade" id="replyModal-{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postModalLabel">リプライ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{ post.text | truncatechars:40 }}</p>
+                <form method="post" action="{% url 'posts:create' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea class="form-control" id="postFormControlTextarea" name="text" rows="5" placeholder=""></textarea>
+                    </div>
+                    <div class="mx-auto">
+                        <button class="btn btn-main btn-block text-center" type="submit" name="action" value="reply">リプライ</button>
+                    </div>
+                    <input type="hidden" name="related_post_id" value="{{ post.id }}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,505 @@
+/* 共通 */
+:root {
+  --main-bg-color: #000;
+  --main-color: rgb(53, 102, 180);
+  --sub-color: rgb(218, 188, 43);
+}
+
+@font-face {
+	font-family: 'TitleFont';
+	src: url('/static/media/OtsutomeFont_Ver3.ttf');
+}
+
+body {
+  background-color: var(--main-bg-color);
+  color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+h5 {
+    margin-top: 30px;
+}
+
+img {
+  max-width: 100%;
+}
+
+input, textarea, .form-control {
+  background-color: var(--main-bg-color);
+  color: #fff;
+  border-radius: 0%;
+}
+
+input, textarea, .form-control:focus {
+  background-color: var(--main-bg-color);
+  color: #fff;
+}
+
+.post-main-text {
+  font: 1.2em bold;
+}
+
+.side-menu-bar {
+  position: fixed;
+}
+
+.side-menu-bar > ul > li:nth-child(-n+2) > a {
+  height: 60px;
+  width: 100%;
+  font-size: 2em;
+  color: #fff;
+  font-weight: bold;
+  display: block;
+}
+.side-menu-bar > ul > li:nth-child(3) > a {
+  height: 60px;
+  width: 100%;
+  font-size: 2em;
+  color: var(--sub-color);
+  font-weight: bold;
+  display: block;
+}
+.side-menu-bar > ul > li:nth-child(4) > a {
+  height: 60px;
+  width: 100%;
+  font-size: 2em;
+  color: var(--sub-color);
+  font-weight: bold;
+  display: block;
+}
+.side-menu-bar > ul > li:nth-child(n+5) > a {
+  height: 60px;
+  width: 100%;
+  font-size: 2em;
+  color: var(--main-color);
+  font-weight: bold;
+  display: block;
+}
+.post-flex-action {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.post-flex-action > * {
+  width: 100%;
+  border: 2px solid rgb(47, 51, 54);
+  border-radius: 5px;
+  text-align: center;
+  line-height: 2;
+}
+
+.post-flex-delete form .btn {
+  width: 100%;
+}
+
+.dropdown-menu {
+  background-color: rgb(47, 51, 54);
+  color: #fff;
+  border: 1px solid var(--main-bg-color);
+  border-radius: 0%;
+}
+
+.dropdown-item {
+  background-color: rgb(47, 51, 54);
+  color: #fff;
+}
+
+.dropdown-divider {
+  border-top: 1px solid var(--main-bg-color);
+}
+/* カード */
+.card {
+  background-color: var(--main-bg-color);
+  color: #fff;
+  border: 1px solid rgb(47, 51, 54);
+  border-radius: 0rem;
+  text-align: center;
+}
+
+/* ボタン */
+.hover-opacity60:hover {
+  opacity: 0.6;
+}
+
+.btn-main {
+  width: 180px;
+  height:50px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--main-color);
+  border-radius: 0%;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.btn-main::after{
+  width: 100%;
+  height: 0;
+  content:"";
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  background : var(--main-color);
+  opacity: 0;
+  transform: translateX(-50%) translateY(-50%) rotate(90deg);
+  transition: .2s;
+  z-index: -1;
+}
+
+.btn-main:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-main:hover::after {
+  height: 650%;
+  opacity: 1;
+}
+
+.btn-main:hover:active::after {
+  border: 2px solid var(--main-color);
+  height: 800%;
+  opacity: 1;
+}
+.btn-sub {
+  width: 180px;
+  height:50px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--sub-color);
+  border-radius: 0%;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.btn-sub::after{
+  width: 100%;
+  height: 0;
+  content:"";
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  background : var(--sub-color);
+  opacity: 0;
+  transform: translateX(-50%) translateY(-50%) rotate(90deg);
+  transition: .2s;
+  z-index: -1;
+}
+
+.btn-sub:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-sub:hover::after {
+  height: 650%;
+  opacity: 1;
+}
+
+.btn-sub:hover:active::after {
+  border: 2px solid var(--sub-color);
+  height: 800%;
+  opacity: 1;
+}
+
+button.btn-main, button.btn-sub {
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ポインタ */
+.pointer {
+  cursor: pointer;
+}
+
+/* 【暫定】Jazz達 */
+.title-font {
+  font-family: 'TitleFont';
+}
+
+/* アナウンスメッセージ */
+.message-template {
+  margin-left: auto;
+  max-width: 992px;
+}
+.posts-base-messages {
+  list-style: none;
+  padding: 0;
+}
+.alert {
+  margin: 1rem 0;
+}
+
+/* タイムライン */
+.post-image {
+  width: 50%;
+  border-radius: 5px;
+}
+.post-photo {
+  width: 50px;
+  height: 50px;
+}
+.form-content {
+  max-width: 330px;
+  margin: auto;
+}
+.form-control-file {
+  display: none;
+}
+.form-group .form-check label {
+  display: inline-block;
+}
+.form-group {
+  word-break: break-all;
+}
+.profile-post-photo {
+  width: 50px;
+  height: 50px;
+}
+
+/* リプライ */
+.reply-link {
+  color: darkgrey;
+}
+
+/* いいね */
+.post-like i {
+  color: darkgrey;
+}
+.post-liked i {
+  color: var(--sub-color);
+}
+.badge {
+  color: #fff;
+  background-color: var(--main-color);
+}
+/* リツイート */
+.post-repost i {
+  color: darkgrey;
+}
+.post-reposted i {
+  color: lime;
+}
+
+/* その他 プルダウン */
+div.post-flex-action > div.post-flex-dropdown.show > div {
+  color: #fff;
+}
+
+/* プロフィール */
+#jz-profile-links a:hover
+, #jz-profile-links .active {
+    color: var(--sub-color);
+    transition: .2s;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.jz-profile-form:disabled {
+    border: var(--main-bg-color);
+    background-color: var(--main-bg-color);
+}
+
+.jz-toggle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.jz-pointer {
+    cursor: pointer;
+}
+
+.jz-img {
+    width: initial;
+    height: initial;
+    max-width: 100%;
+    max-height: 330px;
+}
+
+/* モーダル */
+.modal {
+  background-color: rgba(91, 112, 131, 0.4);
+}
+
+.modal-content {
+  background-color: var(--main-bg-color);
+}
+
+.close {
+  color: #fff;
+}
+.close:hover {
+  color: #fff;
+}
+
+/* ページネーション */
+.page-item.disabled .page-link, .page-link {
+  background-color: var(--main-bg-color);
+}
+
+/* Croppie */
+#profileImage_croppie img {
+    width: initial;
+    height: initial;
+}
+
+/* Notifications */
+.notification-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.notification-time {
+  color: darkgray;
+}
+
+.top-menu-bar {
+    display: none;
+    position: fixed;
+    background-color: var(--main-bg-color);
+    width: 100%;
+    height: 120px;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    padding: 10px 50px;
+    border-bottom: 1px solid rgb(47, 51, 54);
+}
+
+.jz-sitelogo-welcome h1 {
+    color: var(--main-color);
+}
+
+.jz-link-card:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.jz-bright-card {
+    background-color: #222;
+    border-color: var(--main-bg-color);
+}
+
+.jz-icon-wrap {
+    display: block;
+    width: 50px;
+}
+
+@media (max-width: 992px) {
+
+body {
+    font-size: 2rem;
+}
+
+h5 {
+    font-size: inherit;
+}
+
+.form-control {
+    font-size: 2rem;
+}
+
+.post-flex-action .btn {
+    font-size: 3rem;
+}
+
+.container {
+    max-width: 90%;
+}
+
+.btn {
+    font-size: 2rem;
+}
+
+.top-menu-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.side-menu-bar {
+    position: fixed;
+    z-index: 2;
+    background-color: var(--main-bg-color);
+    width: 100%;
+    height: 100%;
+    top: 120px;
+    left: 0;
+    text-align: center;
+    opacity: .95;
+}
+
+.side-menu-bar {
+    transform: translateX(100%);
+    transition: .3s;
+}
+
+.side-menu-bar.active {
+    transform: translateX(0);
+    transition: .3s;
+}
+
+.side-menu-bar > ul > li:nth-child(1) > a {
+    display: none;
+}
+
+.message-template {
+    padding-top: 120px;
+}
+
+.jz-sitelogo-welcome {
+    display: none;
+}
+
+.side-menu-bar > ul > li:nth-child(-n+2) > a ,
+.side-menu-bar > ul > li:nth-child(3) > a ,
+.side-menu-bar > ul > li:nth-child(4) > a ,
+.side-menu-bar > ul > li:nth-child(n+5) > a {
+    height: initial;
+    font-size: 6vw;
+}
+
+.top-menu-bar .title-font > h1 {
+    font-size: 4.5rem;
+}
+
+.top-menu-bar .btn {
+    font-size: 2rem;
+}
+
+#profile-edit .btn {
+    font-size: 2rem;
+    margin: 0 30px 0 0;
+}
+
+.jz-toggle {
+    justify-content: initial;
+}
+
+.btn-sub {
+    width: initial;
+}
+
+.jz-profile-edit {
+    font-size: 3rem;
+}
+
+.dropdown-item {
+    font-size: 3rem;
+}
+
+}

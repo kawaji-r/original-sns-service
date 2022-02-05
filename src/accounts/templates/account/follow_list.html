@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ heading }} | Jazz達{% endblock %}
+{% block contents %}
+
+<h6 class="m-3">{{ heading }}</h6>
+
+{# Main #}
+{% for data in object_list %}
+    {% include 'account/user_list_body.html' %}
+{% empty %}
+    {# 表示ユーザーがいない場合 #}
+    <ul class="posts-base-messages">
+        <li class="alert alert-warning">現在ユーザーはいません</li>
+    </ul>
+{% endfor %}
+
+{# ページャ #}
+<nav>
+  <ul class="pagination justify-content-center mt-5">
+  {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link text-info" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">&laquo;</a>
+    </li>
+  {% else %}
+    <li class="page-item disabled"><span class="page-link">
+      &laquo;</span></a>
+    </li>
+  {% endif %}
+  {% for i in page_obj.paginator.page_range %}
+  {% if page_obj.number == i %}
+    <li class="page-item disabled"><span class="page-link">{{ i }}</span></li>
+  {% else %}
+    <li class="page-item"><a class="page-link text-info" href="?page={{ i }}">{{ i }}</a></li>
+  {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link text-info" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+    </li>
+  {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">&raquo;</span>
+    </li>
+  {% endif %}
+  </ul>
+</nav>
+{% endblock %}

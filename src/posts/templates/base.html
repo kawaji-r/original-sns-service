@@ -1,0 +1,146 @@
+{% load static %}
+{% load bootstrap4 %}
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://kit.fontawesome.com/f8452db4da.js" crossorigin="anonymous"></script>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'Croppie/croppie.css' %}" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4YJ6RZ9LFL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-4YJ6RZ9LFL');
+    </script>
+    <!-- / Global site tag (gtag.js) - Google Analytics -->
+  </head>
+
+  <body>
+
+
+
+    {% if user.is_authenticated %}
+    <!-- 投稿 モーダル -->
+    <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="postModalLabel">新規投稿</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="{% url 'posts:create' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <input class="form-control" id="postFormControlInput" name="title" placeholder="タイトル">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" id="postFormControlTextarea" name="text" rows="5" placeholder=""></textarea>
+              </div>
+              <div class="form-group mt-1">
+                <label for="postFormControlFile" class="hover-opacity60"><i class="far fa-images fa-2x"></i> 画像を選択</label>
+                <input type="file" class="form-control-file" id="postFormControlFile" name="photo">
+              </div>
+              <button class="btn btn-main btn-block" type="submit" name="action" value="post">送信</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <main role="main" class="container">
+      <header class="top-menu-bar">
+        <a class="navbar-brand title-font" href="{% url 'posts:index' %}"><h1>Jazz達</h1></a>
+        <a class="btn btn-light" href="#"><i class="fas fa-bars"></i></a>
+      </header>
+      <div class="row mt-lg-5 mt-3">
+        <div class="col-lg-4 side-menu-bar mt-3" style="overflow: hidden;">
+          <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+            <li class="nav-item hover-opacity60">
+              <a class="navbar-brand title-font" href="{% url 'posts:index' %}"><h1>Jazz達</h1></a>
+            </li>
+            <li class="nav-item hover-opacity60">
+              <a class="nav-link" href="{% url 'accounts:detail_post' user.id %}">
+                <i class="fas fa-lg fa-user"> {{ user.nickname | truncatechars:8 }}</i>
+              </a>
+            </li>
+            <li class="nav-item hover-opacity60">
+              <a class="nav-link" href="{% url 'posts:index' %}">
+                <i class="fas fa-lg fa-home mr-3"></i>HOME
+              </a>
+            </li>
+            <li class="nav-item hover-opacity60">
+              <a class="nav-link" data-toggle="modal" data-target="#postModal" data-whatever="@mdo" href="{% url 'posts:index' %}">
+                <i class="fas fa-lg fa-pencil-alt mr-3"></i>POST
+              </a>
+            </li>
+            <li class="nav-item hover-opacity60">
+              <a class="nav-link" href="{% url 'notifications:notifications' %}">
+                <i class="far fa-lg fa-bell mr-3"></i>NOTIFICATIONS
+              </a>
+            </li>
+            <li class="nav-item hover-opacity60">
+              <a class="nav-link" href="{% url 'posts:index' %}">
+                <i class="far fa-lg fa-envelope mr-3"></i>MESSAGES
+              </a>
+            </li>
+            <li class="nav-item hover-opacity60">
+              <a class="nav-link" href="{% url 'posts:bookmark' %}">
+                <i class="far fa-lg fa-bookmark mr-3"></i>BOOK MARKS
+              </a>
+            </li>
+            <li class="nav-item hover-opacity60">
+              <a class="nav-link" href="{% url 'account_logout' %}">
+                <i class="fas fa-sign-out-alt mr-3"></i>LOGOUT
+              </a>
+            </li>
+            {% block deactivate %}{% endblock %}
+            {% else %}
+            <li class="nav-item hover-opacity60">
+              <a class="navbar-brand title-font" href=""><h1>Jazz達</h1></a>
+            </li>
+              {% block login %}{% endblock %}
+              {% block signup %}{% endblock %}
+            <li class="nav-item hover-opacity60">
+              <a class="btn btn-main" data-toggle="modal" data-target="#topModal" data-whatever="@mdo" href="">
+                {% block enter %}{% endblock %}
+              </a>
+            </li>
+          {% endif %}
+          </ul>
+        </div>
+        <div class="col-lg-8 message-template">
+          {% if messages %}
+          <div class="w-100">
+            <ul class="posts-base-messages">
+              {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          {% block contents %}{% endblock %}
+        </div>
+      </div>
+    </main>
+  
+    <!-- /.container -->
+    <p class="mt-5 mb-3 text-muted text-center">&copy; 2021 Jazz達</p>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'Croppie/croppie.js' %}"></script>
+  </body>
+</html>

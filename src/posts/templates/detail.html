@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ post.user.nickname }}の投稿 | Jazz達{% endblock %}
+{% block contents %}
+
+<div class="card text-left">
+  <div class="card-body">
+    <div class="d-flex">
+      <div>
+        <a href="{% url 'accounts:detail_post' post.user.id %}"><img src="{% if post.user.thumbnail %}{{ post.user.thumbnail.url }}{% else %}{% static 'images/no_photo.png' %}{% endif %}" class="rounded-circle profile-post-photo"></a>
+      </div>
+      <div class="ml-3">
+        <a href="{% url 'accounts:detail_post' post.user.id %}" class="post-main-text text-white hover-opacity60">{{ post.user.nickname }}</a><br>
+        <small class="text-muted">{{ post.created_at | date:"n月j日 H時i分" }}</small>
+      </div>
+    </div>
+    <div class="my-3">
+      <a href="{% url 'posts:detail' post.pk %}" class="post-main-text text-white">{% if post.title %}{{ post.title }}{%else %}title{% endif %}</a>
+    </div>
+    {% if post.post_image %}
+    <img class="post-image" src="{{ post.post_image.url }}" alt="投稿画像" />
+    {% endif %}
+    <p class="card-text mt-2">{{ post.text | linebreaks }}</p>
+    <!-- リプライ, いいね など -->
+    <div class="post-flex-action my-2">
+        <div class="post-flex-reply" data-toggle="modal" data-target="#replyModal-{{ post.id }}" data-whatever="@mdo" onclick="return false;">
+            <div class="btn reply-link p-0">
+                <i class="far fa-comment post-icon hover-opacity60 text-white"></i>
+            </div>
+            <span class="badge" onclick="javascript:showReply({{ post.pk }}, {{ post.get_reply | length }}); return false;">{{ post.get_reply | length }}</span>
+        </div>
+        <div class="post-flex-like btn-like" onclick="return false;">
+            <button class="btn btn-link p-0 {% if user in post.get_like %}post-liked{% else %}post-like{% endif %} post-like-{{ post.id }}" data-id="{{ post.id }}">
+                <i class="fab fa-itunes-note hover-opacity60"></i>
+            </button>
+            <span class="badge like-count-{{ post.id }}">{{ post.get_like | length }}</span>
+        </div>
+        <div class="post-flex-repost btn-repost" onclick="return false;">
+            <button class="btn btn-link p-0 {% if user in post.get_repost %}post-reposted{% else %}post-repost{% endif %} post-repost-{{ post.id }}" data-id="{{ post.id }}">
+                <i class="fas fa-retweet hover-opacity60"></i>
+            </button>
+        </div>
+        <div class="post-flex-dropdown" onclick="return false;">
+            <div data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-ellipsis-v text-white"></i>
+            </div>
+            <div class="dropdown-menu">
+                <div class="dropdown-item jz-btn-bookmark{% if user in post.get_bookmark %} jz-bookmarked{% endif %}" data-id="{{ post.id }}">
+                    {% if user in post.get_bookmark %}
+                    ブックマークから外す
+                    {% else %}
+                    このポストをブックマークする
+                    {% endif %}
+                </div>
+            </div>
+            <!--
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">{{ post.user }}さんをフォローする</a>
+                <a class="dropdown-item" href="#">{{ post.user }}さんをブロックする</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">通報する</a>
+            </div>
+            -->
+        </div>
+        {% if post.user.id == user.id %}
+        <div class="post-flex-delete">
+            <form method="post" action="{% url 'posts:delete' post.id %}" class="d-inline">
+                {% csrf_token %}
+                <button class="btn btn-link text-info p-0 hover-opacity60" type="submit" onclick='return confirm("この投稿を本当に削除しますか？"); return false;'>
+                    <i class="far fa-trash-alt text-white"></i>
+                </button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+  </div>
+</div>
+<hr>
+{% include 'posts.html' %}
+
+<!-- reply モーダル -->
+<div class="modal fade" id="replyModal-{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="postModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="postModalLabel">リプライ</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{ post.text | truncatechars:40 }}</p>
+        <form method="post" action="{% url 'posts:create' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <textarea class="form-control" id="postFormControlTextarea" name="text" rows="5" placeholder=""></textarea>
+          </div>
+          <button class="btn btn-main btn-block" type="submit" name="action" value="reply">リプライ</button>
+          <input type="hidden" name="related_post_id" value="{{ post.id }}">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

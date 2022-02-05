@@ -1,0 +1,37 @@
+{% load static %}
+<p>
+    <img
+        class="jz-pointer jz-img"
+        src="{% if customuser.photo %}{{ customuser.photo.url }}{% else %}{% static 'images/no_photo.png' %}{% endif %}"
+        alt="プロフィール画像"
+        data-toggle="modal"
+        data-target="#uploadimageModal"
+        role="button"
+    >
+</p>
+<div class="modal fade" id="uploadimageModal" tabindex="-1" role="dialog" aria-labelledby="uploadimageModalTitle" aria-hidden="true">
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">プロフィール画像をアップロード</h5>
+        </div>
+        <div class="modal-body">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon">アップロード</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" name="upload_image" id="upload_image" class="custom-file-input" aria-describedby="inputGroupFileAddon" accept="image/*" />
+                    <label class="custom-file-label" for="inputGroupFile" data-browse="参照">ファイル選択...</label>
+                </div>
+            </div>
+            <div id="profileImage_croppie"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary btn-sm" id="post_image">画像を登録</button>
+            <button class="btn btn-danger btn-sm" id="delete_image">画像を削除</button>
+            <button type="button" class="btn btn-secondary btn-sm ml-2" id="cancel" data-dismiss="modal">キャンセル</button>
+        </div>
+    </div>
+</div>
+</div>

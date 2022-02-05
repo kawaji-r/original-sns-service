@@ -1,0 +1,29 @@
+{% load static %}
+{% for post in posts %}
+<a
+  class="card text-left jz-link-card"
+  href="{% if post.post_category == 2 %}{% url 'posts:detail' post.related_post.pk %}{% else %}{% url 'posts:detail' post.pk %}{% endif %}"
+>
+  <div class="card-body">
+  {% if post.post_category == 2 %}
+    <p><i class="fas fa-retweet"></i>&nbsp;{{ post.user.nickname }}さんがリポスト</p>
+    {% include 'post_body.html' with post=post.related_post %}
+  {% else %}
+    {% include 'post_body.html' with post=post %}
+  {% endif %}
+  </div>
+</a>
+
+{% if post.post_category == 2 %}
+  <p><i class="fas fa-retweet"></i>&nbsp;{{ post.user.nickname }}さんがリポスト</p>
+  {% include 'post_reply_modal.html' with post=post.related_post %}
+{% else %}
+  {% include 'post_reply_modal.html' with post=post %}
+{% endif %}
+
+{% endfor %}
+{% comment %} {%if forloop.counter|divisibleby:"5" %} {% endcomment %}
+{% for r in recommend %}
+  {% include 'account/user_list_body.html' with data=r recommendflag=True %}
+{% endfor %}
+{% comment %} {% endif %} {% endcomment %}

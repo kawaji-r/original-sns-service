@@ -1,0 +1,128 @@
+[
+    {
+        "model": "accounts.customuser",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$LtlrBLmUsMOY$87/1Hs7ph01i5lMgisGMEiYC6F/3v6XqrGHNwDbeHQE=",
+            "last_login": "2021-07-01T01:01:01.111Z",
+            "is_superuser": true,
+            "first_name": "",
+            "last_name": "",
+            "email": "example@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2021-01-01T01:01:01.111Z",
+            "nickname": "admin",
+            "username": "admin",
+            "description": null,
+            "photo": "",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$qq047MohRzTa$7X5zfo3F4ovNyHJSej0MEw2AWVtQxD35a2I5U5xSGnE=",
+            "last_login": "2021-07-01T01:01:01.111Z",
+            "is_superuser": false,
+            "first_name": "",
+            "last_name": "",
+            "email": "example2@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-02-02T01:02:02.222Z",
+            "nickname": "Bill Evans",
+            "username": "billevans",
+            "description": "1929年、アメリカはニュージャージー州で生まれたビル・エヴァンスさんは、モダン・ジャズの歴史において最も重要かつ知名度の高い白人ピアニストです。クラシック音楽から影響を受けた、ストイックなまでに繊細かつ優美なスタイルは「ジャズピアノの詩人」とも称され、ジャズ・ミュージシャンのみならず、幅広いジャンルのアーティストたちに影響を与え続けています。",
+            "photo": "images/user2.png",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$qq047MohRzTa$7X5zfo3F4ovNyHJSej0MEw2AWVtQxD35a2I5U5xSGnE=",
+            "last_login": "2021-07-01T01:01:01.111Z",
+            "is_superuser": false,
+            "first_name": "",
+            "last_name": "",
+            "email": "example3@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-03-03T01:03:03.333Z",
+            "nickname": "Charlie Parker",
+            "username": "charlieparker",
+            "description": "34歳という若さで夭折した、モダン・ジャズの原型と言われる「ビバップスタイル」の立役者であり、伝説的なアルトサックス奏者にして作曲家・編曲家としても名を残すチャーリー・パーカーさん。理論をこえた感覚的なアドリブで織り成すプレイの数々は、まさに天才と呼ぶにふさわしいものであり、ジャズという音楽ジャンルの発展に計り知れない貢献を果たした革新的なプレイヤーです。",
+            "photo": "images/user3.png",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$qq047MohRzTa$7X5zfo3F4ovNyHJSej0MEw2AWVtQxD35a2I5U5xSGnE=",
+            "last_login": "2021-07-01T01:01:01.111Z",
+            "is_superuser": false,
+            "first_name": "",
+            "last_name": "",
+            "email": "example4@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-04-04T01:04:04.444Z",
+            "nickname": "Miles Davis",
+            "username": "milesdavis",
+            "description": "彼なしにはジャズの歴史は語れないといわれるほどの貢献を残したジャズ・トランペット奏者、マイルス・デイビスさん。彼の演奏はトランペット奏者にありそうな華々しい高音の連発やテクニックといったものとは違い、ミュートといういわゆる弱音器を多用し、1音1音に魂がこもったような思慮深いものです。",
+            "photo": "images/user4.png",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": 5,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$qq047MohRzTa$7X5zfo3F4ovNyHJSej0MEw2AWVtQxD35a2I5U5xSGnE=",
+            "last_login": "2021-07-01T01:01:01.111Z",
+            "is_superuser": false,
+            "first_name": "",
+            "last_name": "",
+            "email": "example5@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-05T01:05:05.555Z",
+            "nickname": "Chet Baker",
+            "username": "chetbaker",
+            "description": "チェット・ベイカーさんは、1950年代のウエスト・コースト・ジャズを代表するトランペット奏者でありながら、シンガーとしても活躍した多彩な才能を持ったジャズ界の巨人です。端正な顔立ちとクールな佇まいそのもの、といった音数の少ない抑制を効かせた演奏と中性的な歌声に魅了されたジャズ・ファンは数知れず。",
+            "photo": "images/user5.png",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": 6,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$qq047MohRzTa$7X5zfo3F4ovNyHJSej0MEw2AWVtQxD35a2I5U5xSGnE=",
+            "last_login": "2021-07-01T01:01:01.111Z",
+            "is_superuser": false,
+            "first_name": "",
+            "last_name": "",
+            "email": "example6@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-06-06T01:06:06.666Z",
+            "nickname": "Oscar Peterson",
+            "username": "oscarpeterson",
+            "description": "ジャズ・ピアニストの最高峰にして、突出した技巧や独創的なアドリブを持つ「鍵盤の皇帝」ことオスカー・ピーターソンさん。Ïカナダはケベック州、モントリオール出身のピーターソンさんがジャズの歴史に残した輝かしい財産は、短い文章の中で書き切れるものではありませんが、ミスタッチがほとんどないと言われる卓越したテクニックはもちろん、歌心あふれるハッピーで軽快な演奏はリスナーをいつでも笑顔にさせますよね。",
+            "photo": "images/user6.png",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

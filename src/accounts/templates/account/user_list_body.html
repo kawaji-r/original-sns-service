@@ -1,0 +1,40 @@
+{% load static %}
+<a
+    href="{% url 'accounts:detail_post' data.id %}"
+    class="card text-left p-3 jz-link-card jz-bright-card"
+>
+    {% if recommendflag == True %}<p>おすすめのユーザー</p>{% endif %}
+    <div class="d-flex">
+        <div>
+            <span class="jz-icon-wrap">
+                <img
+                    src="{% if data.thumbnail %}{{ data.thumbnail.url }}{% else %}{% static 'images/no_photo.png' %}{% endif %}"
+                    class="rounded-circle profile-post-photo"
+                >
+            </span>
+        </div>
+
+        <div class="mx-3">
+            <div class="post-main-text text-white hover-opacity60">{{ data.nickname }}</div>
+            <small class="text-muted">{{ data.description | default:"" }}</small>
+        </div>
+
+        <!-- フォローボタン -->
+        {% if user != data %}
+        <div class="ml-auto">
+            <button
+                type="button"
+                class="btn {% if user in data.get_follower %}btn-sub{% else %}btn-main{% endif %} jz-btn-follow"
+                data-id="{{ data.id }}"
+                onclick="return false;"
+            >
+                {% if user in data.get_follower %}
+                    {{ label.UNFOLLOW_BUTTON }}
+                {% else %}
+                    {{ label.FOLLOW_BUTTON | safe }}
+                {% endif %}
+            </button>
+        </div>
+        {% endif %}
+    </div>
+</a>

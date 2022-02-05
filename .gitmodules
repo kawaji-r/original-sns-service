@@ -1,0 +1,3 @@
+[submodule "src/static/Croppie"]
+	path = src/static/Croppie
+	url = git@github.com:Foliotek/Croppie.git

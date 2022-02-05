@@ -1,0 +1,37 @@
+{% extends './welcome.html' %}
+
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block title %}SIGNUP{% endblock %}
+
+{% block enter %}SIGNUP{% endblock %}
+
+{% block login %}
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'account_login' %}">
+    <i class="fas fa-sign-in-alt mr-3"></i>LOGIN
+  </a>
+</li>
+{% endblock %}
+
+{% block img %}
+<img src="/static/images/signup.jpg" alt="an image as signup">
+{% endblock %}
+
+{% block contents %}
+  <!-- 投稿 モーダル -->
+  <li>
+    <div class="form-content">
+      <h1 class="title-font mb-4">Jazz達</h1>
+      <form method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-main btn-block" type="submit">登録する</button>
+        <p class="mt-3"><a href="{% url 'account_login' %}" class="text-info">ログイン</a></p>
+        <p class="mt-3"><a href="{% url 'account_reset_password' %}" class="text-info">パスワードをお忘れですか？</a></p>
+      </form>
+    </div>
+  </li>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}NOTIFICATIONS{% endblock title %}
+{% block contents %}
+
+{% for notification in notifications %}
+<div class="card text-left">
+    <div class="card-body">
+        <div class="notification-flex">
+            <a href="{% url 'accounts:detail_post' notification.action_user.id %}">
+                <img src="{% if notification.action_user.thumbnail %}{{ notification.action_user.thumbnail.url }}{% else %}{% static 'images/no_photo.png' %}{% endif %}" class="rounded-circle profile-post-photo">
+            </a>
+            <p class="notification-time">{{ notification.created_at }}</p>
+        </div>
+        <h5>{{ notification.text }}</h5>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock contents %}

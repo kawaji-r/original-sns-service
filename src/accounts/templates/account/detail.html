@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ customuser.nickname }} | Jazz達{% endblock %}
+{% block contents %}
+<!-- プロフィール部分 -->
+<form method="post" enctype="multipart/form-data" id="profile-edit" class="card pt-5 px-5">
+    {% csrf_token %}
+    <div class="row">
+        <!-- 左カラム -->
+        <div class="col-lg-6">
+            <!-- 画像 -->
+            {% include "account/user_icon.html" %}
+        </div>
+
+        <!-- 右カラム -->
+        <div class="col-lg-6">
+
+            <!-- フォローボタン -->
+            {% if user != customuser %}
+            <div class="text-right mb-4">
+                <button
+                    type="button"
+                    class="btn {% if user in customuser.get_follower %}btn-sub{% else %}btn-main{% endif %} jz-btn-follow"
+                    data-id="{{ customuser.id }}"
+                >
+                    {% if user in customuser.get_follower %}
+                        {{ label.UNFOLLOW_BUTTON }}
+                    {% else %}
+                        {{ label.FOLLOW_BUTTON | safe }}
+                    {% endif %}
+                </button>
+            </div>
+            {% endif %}
+
+            <!-- 名前 -->
+            <div class="mb-3 jz-profile-name">
+                <div class="d-flex mb-1">
+                    {{ form.nickname }}
+                    {% if user == customuser %}
+                    <a
+                        class="ml-2 collapse show jz-profile-edit jz-toggle"
+                        data-toggle="collapse"
+                        href="javacsript:void(0);"
+                        data-target=".jz-profile-name .jz-toggle"
+                    >
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    {% endif %}
+                </div>
+                {% if user == customuser %}
+                <div class="collapse jz-toggle">
+                    <button
+                        type="button"
+                        class="btn btn-sub jz-profile-edit btn-mini"
+                        data-toggle="collapse"
+                        data-target=".jz-profile-name .jz-toggle"
+                    >キャンセル</button>
+                    <button type="submit" class="btn btn-main .btn-mini">適用する</button>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- 自己紹介 -->
+            <div class="mb-3 jz-profile-description">
+                <div class="d-flex mb-1">
+                    {{ form.description }}
+                    {% if user == customuser %}
+                    <a
+                        class="ml-2 collapse show jz-profile-edit jz-toggle"
+                        data-toggle="collapse"
+                        href="javacsript:void(0);"
+                        data-target=".jz-profile-description .jz-toggle"
+                    >
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    {% endif %}
+                </div>
+                {% if user == customuser %}
+                <div class="collapse jz-toggle">
+                    <button
+                        type="button"
+                        class="btn btn-sub jz-profile-edit btn-mini"
+                        data-toggle="collapse"
+                        data-target=".jz-profile-description .jz-toggle"
+                    >キャンセル</button>
+                    <button type="submit" class="btn btn-main .btn-mini">適用する</button>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+    <div id="jz-profile-links">
+        <!-- フォローフォロワー -->
+        <div class="row">
+            <p class="col-6"><a href="{% url 'accounts:followlist' customuser.id %}"><span class="font-weight-bold">{{ follow_count }}</span>フォロー中</a></p>
+            <p class="col-6"><a href="{% url 'accounts:followerlist' customuser.id %}"><span class="font-weight-bold">{{ follower_count }}</span>フォロワー</a></p>
+        </div>
+
+        <!-- 投稿 -->
+        <div class="flex-space-between row">
+            {# リプライしていない自分のポスト #}
+            <a class="col-3{% if '/post/'       in request.path %} active{% endif %}" href="{% url 'accounts:detail_post' customuser.id %}">投稿</a>
+            {# リプライ含むすべての自分のポスト #}
+            <a class="col-3{% if '/post_reply/' in request.path %} active{% endif %}" href="{% url 'accounts:detail_post_reply' customuser.id %}">投稿と返信</a>
+            {# 画像投稿をしている自分のポスト #}
+            <a class="col-3{% if '/media/'      in request.path %} active{% endif %}" href="{% url 'accounts:detail_media' customuser.id %}">メディア</a>
+            {# 自分がいいねをしたポスト #}
+            <a class="col-3{% if '/like/'       in request.path %} active{% endif %}" href="{% url 'accounts:detail_like' customuser.id %}">いいね</a>
+        </div>
+    </div>
+</form>
+
+{% include 'posts.html' %}
+
+{% endblock %}
+
+<!-- サイドバーに退会リンクを表示 -->
+{% block deactivate %}
+{% if user == customuser %}
+<li class="nav-item hover-opacity60">
+    <a 
+    class="nav-link" 
+    href="{% url 'accounts:deactivate' user.id %}"
+    onclick="return confirm('退会するとアカウント情報が全て削除されます。\nよろしいですか？');">
+        <i class="fas fa-user-slash mr-3"></i>DEACTIVATE
+    </a>
+</li>
+{% endif %}
+{% endblock %}

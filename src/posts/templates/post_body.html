@@ -1,0 +1,80 @@
+{% load static %}
+
+<!-- アイコン, ユーザー名, 投稿日時 -->
+<div class="d-flex mb-3">
+    <div>
+    {# aタグの中にaタグを入れるために、子aタグをobjectタグで囲む #}
+    <object><a href="{% url 'accounts:detail_post' post.user.id %}"><img src="{% if post.user.thumbnail %}{{ post.user.thumbnail.url }}{% else %}{% static 'images/no_photo.png' %}{% endif %}" class="rounded-circle profile-post-photo"></a></object>
+    </div>
+
+    <div class="ml-3">
+    <object><a href="{% url 'accounts:detail_post' post.user.id %}" class="post-main-text text-white hover-opacity60">{{ post.user.nickname }}</a></object><br>
+
+    <small class="text-muted">{{ post.created_at | date:"n月j日 H時i分" }}</small>
+    </div>
+</div>
+
+<!-- 投稿 -->
+<div class="post-body">
+    {% if post.title %}
+    <div>
+        <object><a href="{% url 'posts:detail' post.pk %}" class="post-main-text text-white">{{ post.title }}</a></object>
+    </div>
+    {% endif %}
+    {% if post.post_image %}
+        <img class="post-image" src="{{ post.post_image.url }}" alt="投稿画像" />
+    {% endif %}
+    <p class="card-text mt-2">{{ post.text | linebreaksbr }}</p>
+</div>
+<!-- リプライ, いいね など -->
+<div class="post-flex-action my-2">
+    <div class="post-flex-reply" data-toggle="modal" data-target="#replyModal-{{ post.id }}" data-whatever="@mdo" onclick="return false;">
+        <div class="btn reply-link p-0">
+            <i class="far fa-comment post-icon hover-opacity60 text-white"></i>
+        </div>
+        <span class="badge" onclick="javascript:showReply('{{ post.pk }}', '{{ post.get_reply | length }}'); return false;">{{ post.get_reply | length }}</span>
+    </div>
+    <div class="post-flex-like btn-like" onclick="return false;">
+        <button class="btn btn-link p-0 {% if user in post.get_like %}post-liked{% else %}post-like{% endif %} post-like-{{ post.id }}" data-id="{{ post.id }}">
+            <i class="fab fa-itunes-note hover-opacity60"></i>
+        </button>
+        <span class="badge like-count-{{ post.id }}">{{ post.get_like | length }}</span>
+    </div>
+    <div class="post-flex-repost btn-repost" onclick="return false;">
+        <button class="btn btn-link p-0 {% if user in post.get_repost %}post-reposted{% else %}post-repost{% endif %} post-repost-{{ post.id }}" data-id="{{ post.id }}">
+            <i class="fas fa-retweet hover-opacity60"></i>
+        </button>
+    </div>
+    <div class="post-flex-dropdown" onclick="return false;">
+        <div data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-v text-white align-middle"></i>
+        </div>
+        <div class="dropdown-menu">
+            <div class="dropdown-item jz-btn-bookmark{% if user in post.get_bookmark %} jz-bookmarked{% endif %}" data-id="{{ post.id }}">
+                    {% if user in post.get_bookmark %}
+                    ブックマークから外す
+                    {% else %}
+                    このポストをブックマークする
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if post.user.id == user.id %}
+    <div class="post-flex-delete">
+        <form method="post" action="{% url 'posts:delete' post.id %}" class="d-inline">
+            {% csrf_token %}
+            <button class="btn btn-link text-info p-0 hover-opacity60" type="submit" onclick='return confirm("この投稿を本当に削除しますか？"); return false;'>
+                <i class="far fa-trash-alt text-white"></i>
+            </button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+<div>
+    {% if post.get_reply %}
+    <div id="posts-trigger-{{ post.pk }}" class="pointer hover-opacity60" onclick="javascript:showReply('{{ post.pk }}', '{{ post.get_reply | length }}'); return false;">
+        {{ post.get_reply | length }}件の返信を表示
+    </div>
+    <div id="posts-reply-{{ post.pk }}"></div>
+    {% endif %}
+</div>
